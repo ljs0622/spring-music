@@ -18,7 +18,7 @@ pipeline {
         stage('Docker Build') {
                     steps {
                         sh "ls -al"
-                        sh "aws sts get-caller-identity"
+                        sh "aws --version"
                         // To run Maven on a Windows agent, use
                         // bat "mvn -Dmaven.test.failure.ignore=true clean package"
                     }
