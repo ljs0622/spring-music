@@ -20,8 +20,10 @@ pipeline {
                 sh "ls -al"
                 sh "docker --version"
                 sh "docker build -t spring-music ."
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                sh "docker login acrtestljs.azurecr.io"
+                sh "docker tag spring-music acrtestljs.azurecr.io/spring-music/springmusic:$BUILD_NUMBER"
+                sh "docker login acrtestljs.azurecr.io"
+                sh "docker push acrtestljs.azurecr.io/spring-music/springmusic:$BUILD_NUMBER"
             }
         }
     }
