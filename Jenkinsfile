@@ -15,6 +15,7 @@ pipeline {
             }
             steps {
                 sh "docker build -t $WEB_IMAGE_NAME ."
+                sh "docker tag $WEB_IMAGE_NAME ${ACR_LOGINSERVER}/spring-music:latest"
                 sh "docker login ${ACR_LOGINSERVER} -u ${ACR_CREDS_USR} -p ${ACR_CREDS_PSW}"
                 sh "docker push ${WEB_IMAGE_NAME}"
             }
@@ -29,6 +30,9 @@ pipeline {
                     sh 'az login --service-principal -u $CLIENT_ID -p $CLIENT_SECRET -t $TENANT_ID'
                     sh "az aks get-credentials --resource-group ResourceGroup-Test-LJS --name AKS-LJS-TEST"
                     sh "kubectl get po -A"
+                    sh 'sed -i "s/<REGISTRY>/acrtestljs.azurecr.io/g" spring-music-manifest.yaml'
+                    sh 'sed -i "s/<ACR_REPO_NAME>/spring-music/g" spring-music-manifest.yaml'
+                    sh "kubectl apply -f spring-music-manifest.yaml"
                 }
             }
         }
