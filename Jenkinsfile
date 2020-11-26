@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'WEB_IMAGE_NAME="${ACR_LOGINSERVER}/spring-music:kube${BUILD_NUMBER}"'
+                sh 'export WEB_IMAGE_NAME="${ACR_LOGINSERVER}/spring-music:kube${BUILD_NUMBER}"'
                 sh "docker --version"
                 sh "docker build -t $WEB_IMAGE_NAME ."
                 sh "docker login ${ACR_LOGINSERVER} -u ${ACR_ID} -p ${ACR_PASSWORD}"
