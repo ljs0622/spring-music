@@ -18,7 +18,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh 'export WEB_IMAGE_NAME="${ACR_LOGINSERVER}/spring-music:kube${BUILD_NUMBER}"'
-                sh "docker --version"
+                sh "echo $WEB_IMAGE_NAME"
                 sh "docker build -t $WEB_IMAGE_NAME ."
                 sh "docker login ${ACR_LOGINSERVER} -u ${ACR_ID} -p ${ACR_PASSWORD}"
                 sh "docker push $WEB_IMAGE_NAME"
