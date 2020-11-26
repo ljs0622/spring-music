@@ -17,13 +17,11 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh "ls -al"
+                sh 'WEB_IMAGE_NAME="${ACR_LOGINSERVER}/spring-music:kube${BUILD_NUMBER}"'
                 sh "docker --version"
-                sh "docker build -t spring-music ."
-                sh "docker login acrtestljs.azurecr.io"
-                sh "docker tag spring-music acrtestljs.azurecr.io/spring-music/springmusic:$BUILD_NUMBER"
-                sh "docker login acrtestljs.azurecr.io"
-                sh "docker push acrtestljs.azurecr.io/spring-music/springmusic:$BUILD_NUMBER"
+                sh "docker build -t $WEB_IMAGE_NAME ."
+                sh "docker login ${ACR_LOGINSERVER} -u ${ACR_ID} -p ${ACR_PASSWORD}"
+                sh "docker push $WEB_IMAGE_NAME"
             }
         }
     }
