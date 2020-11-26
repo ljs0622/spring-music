@@ -20,7 +20,7 @@ pipeline {
             }
         }
         stage('Deploy') {
-            withCredentials([azureServicePrincipal(credentialsId: 'credentials_id',
+            withCredentials([azureServicePrincipal(credentialsId: 'azure_service_principal',
                                                 subscriptionIdVariable: 'SUBS_ID',
                                                 clientIdVariable: 'CLIENT_ID',
                                                 clientSecretVariable: 'CLIENT_SECRET',
