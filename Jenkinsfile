@@ -18,11 +18,12 @@ pipeline {
         stage('Docker Build') {
             environment {
                 WEB_IMAGE_NAME="${ACR_LOGINSERVER}/spring-music:kube${BUILD_NUMBER}"
+                ACR_CREDS = credentials('acr-credentials')
             }
             steps {
                 echo "${WEB_IMAGE_NAME}"
                 sh "docker build -t $WEB_IMAGE_NAME ."
-                sh "docker login ${ACR_LOGINSERVER} -u ${ACR_ID} -p ${ACR_PASSWORD}"
+                sh "docker login ${ACR_LOGINSERVER} -u ${ACR_CREDS_USR} -p ${ACR_CREDS_PSW}"
                 sh "docker push ${WEB_IMAGE_NAME}"
             }
         }
