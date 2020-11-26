@@ -21,7 +21,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
         - name: spring-music
-          image: <REGISTRY>/<ACR_REPO_NAME>
+          image: <REGISTRY>/<ACR_REPO_NAME>:<TAG>
           ports:
             - containerPort: 80
           resources:
